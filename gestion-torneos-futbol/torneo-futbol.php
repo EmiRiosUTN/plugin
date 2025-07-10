@@ -193,6 +193,26 @@ class TorneoSimple {
         foreach ($tablas as $tabla) {
             $contenido = json_decode($tabla->contenido_json, true);
             
+            // IMPORTANTE: Ordenar contenido según el tipo
+            if ($tipo === 'posiciones' && !empty($contenido)) {
+                // Ordenar por posición de manera ascendente
+                usort($contenido, function($a, $b) {
+                    return intval($a['posicion']) - intval($b['posicion']);
+                });
+            } elseif ($tipo === 'partidos' && !empty($contenido)) {
+                // Ordenar partidos por fecha y hora
+                usort($contenido, function($a, $b) {
+                    $fecha_a = $a['fecha'] . ' ' . $a['hora'];
+                    $fecha_b = $b['fecha'] . ' ' . $b['hora'];
+                    return strcmp($fecha_a, $fecha_b);
+                });
+            } elseif ($tipo === 'jugadores' && !empty($contenido)) {
+                // Ordenar jugadores por goles (descendente)
+                usort($contenido, function($a, $b) {
+                    return intval($b['goles']) - intval($a['goles']);
+                });
+            }
+            
             $output .= '<div class="torneo-tabla-container">';
             $output .= '<h3 class="torneo-liga-titulo">' . esc_html($tabla->nombre_tabla) . '</h3>';
             
