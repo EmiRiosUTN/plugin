@@ -371,7 +371,7 @@ jQuery(document).ready(function($) {
     // Auto-recargar después de CSV exitoso
     if (window.location.href.indexOf('success=1') > -1) {
         setTimeout(function() {
-            window.location.href = window.location.href.split('?')[0];
+            window.location.href = 'admin.php?page=torneo-jugadores';
         }, 2000);
     }
 });
