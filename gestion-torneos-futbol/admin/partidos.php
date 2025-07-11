@@ -339,5 +339,14 @@ jQuery(document).ready(function($) {
     if ($('#filas-partidos tr').length === 0) {
         $('#agregar-fila').click();
     }
+    
+    // Auto-recargar después de CSV exitoso
+    if (window.location.href.indexOf('success=1') > -1) {
+        setTimeout(function() {
+            window.location.href = window.location.href.split('?')[0];
+        }, 2000);
+    }
 });
+
+    
 </script>
